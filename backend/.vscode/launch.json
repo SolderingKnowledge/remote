@@ -1,0 +1,45 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {   
+            // `npm i -g nodemon` => install nodemon globally
+            // `nodemon --inspect app.js` globally run
+            // `nodemon app.js` nodemon runs the file in watch mode
+            "type": "node",
+            "request": "attach",
+            "name": "nodemon debug",// nodemon app.js
+            "port": 9229,
+            "restart": true
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "debug file", //node app.js
+            "processId": "${command:PickProcess}"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "debug app",// naming of the debugger
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/app.js"
+             // "node --debug" is deprecated. Use "node --inspect"
+            // by default vscode uses those commands
+            // fix for this is to use => "node --debug app.js" => "node --inspect app.js"
+        }
+
+        // This is what gets created when you run click on a file to debug
+        // json file is sensetive for curly brackets & brackets
+        // curly
+        //     "type": "node",
+        //     "request": "launch",
+        //     "name": "Launch Program",
+        //     "skipFiles": bracket
+        //         "<node_internals>/**"
+        //     bracket,
+        //     "program": "${workspaceFolder}/ok.js"
+        // curly
+    ]
+}
