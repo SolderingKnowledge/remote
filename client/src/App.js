@@ -10,12 +10,18 @@ import { bindActionCreators } from "redux";
 import { fetchData, addData, deleteData } from "./actions/index";
 
 class App extends Component {
-
+    // state = {
+    //     todos: []
+    // }
     UNSAFE_componentWillMount(){
             this.props.fetchData();
+
+            // axios
             // axios.get("http://localhost:5000/todo").then((res) => {
             //     this.setState({todos: res.data})
             // });
+
+            // fetch
             // fetch("http://localhost:5000/todo").then(res => res.json()).
             //     then( res => {
             //         this.setState({todos: res})
@@ -76,7 +82,22 @@ class App extends Component {
     //     });
     // }
     render(){
-        console.log("aikol-todos", this.props.todos)
+        // return (
+        //     <div className="App">
+        //         {
+        //             this.state.todos.length && this.state.todos[0]._id ? this.state.todos.map((todo, idx) => {
+        //                 return (
+        //                     <Todo key={idx} id={todo._id}
+        //                         todo={todo} complete={this.complete}
+        //                         delette={this.delette} edit={this.edit}
+        //                         change={this.change} save={this.save}
+        //                     /> 
+        //                 )
+        //             }): ""
+        //         }
+        //         <Form add={this.add} />
+        //     </div>
+        // );
         return (
             <div className="App">
                 {
@@ -106,3 +127,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 export default connect( mapStateToProps, mapDispatchToProps)(App);
+// export default App;
