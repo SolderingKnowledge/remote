@@ -8,7 +8,7 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "FETCH_DATA":
             return {
-                todos: [...state.todos,...action.payload],
+                todos: [...newState.todos,...action.payload],
             }
         case "ADD_DATA":
             return {
@@ -18,10 +18,25 @@ const reducer = (state = initialState, action) => {
             return {
                 todos: [...action.payload],
             }
+        case "EDIT_DATA":
+            return {
+                todos: [...action.payload],
+            }
+        case "CHANGE_DATA":
+            return {
+                todos: [...action.payload],
+            }
+        case "SAVE_DATA":
+            return {
+                todos: [...action.payload],
+            }
+        case "COMPLETE_TODO":
+            return {
+                todos: [...action.payload],
+            }
         default:
             return state;
     }
-    // return newState;
 };
 
 export default reducer;

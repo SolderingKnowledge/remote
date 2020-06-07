@@ -7,7 +7,15 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 //Custom imports
-import { fetchData, addData, deleteData } from "./actions/index";
+import { 
+    fetchData,
+    addData,
+    deleteData,
+    editData,
+    changeData,
+    saveData,
+    completeTodo,
+} from "./actions/index";
 
 class App extends Component {
     // state = {
@@ -38,11 +46,13 @@ class App extends Component {
         this.props.addData(text);
     }
 
-    // complete = id => {
-    //     axios.put(`http://localhost:5000/todo/complete/${id}`).then((res) => {
-    //         this.setState({todos: res.data});
-    //     })
-    // }
+    complete = id => {
+        // axios.put(`http://localhost:5000/todo/complete/${id}`).then((res) => {
+        //     this.setState({todos: res.data});
+        // })
+
+        this.props.completeTodo(id);
+    }
     
     delette = id => {
         // axios.delete(`http://localhost:5000/todo/${id}`)
@@ -50,37 +60,59 @@ class App extends Component {
         //     const newTodos= this.state.todos.filter(todo => todo._id !== res.data._id );
         //     this.setState({todos: newTodos});
         // });
+
         this.props.deleteData(id);
     }
 
-    // edit = (id) => {
-    //     axios.put(`http://localhost:5000/todo/${id}`).then((res) => {
-    //         this.setState({todos: res.data});
-    //     })
-    // }
-    // change = (value, id) => {
-    //     const newTodos = this.state.todos.map( todo => {
-    //         if(todo._id === id){
-    //             todo.text = value;
-    //         }
-    //         return todo;
-    //     })
-    //     this.setState({todos: newTodos});
-    // }
+    edit = (id) => {
+        // axios.put(`http://localhost:5000/todo/${id}`).then((res) => {
+        //     this.setState({todos: res.data});
+        // })
 
-    // save = ( id )=>{
-    //     let text = ""
-    //     for(let found of this.state.todos){
-    //         if(found._id === id){
-    //             text = found.text;
-    //         }
-    //     }
-    //     axios.post(`http://localhost:5000/todo/${id}`, {
-    //         text: text
-    //     }).then(res => {
-    //         this.setState({todos: res.data});
-    //     });
-    // }
+        this.props.editData(id);
+    }
+
+
+    change = (value, id) => {
+        // const newTodos = this.state.todos.map( todo => {
+        //     if(todo._id === id){
+        //         todo.text = value;
+        //     }
+        //     return todo;
+        // })
+        // this.setState({todos: newTodos});
+
+        const newTodos = this.props.todos.map( todo => {
+            if(todo._id === id){
+                todo.text = value;
+            }
+            return todo;
+        })
+
+        this.props.changeData(newTodos);
+    }
+
+    save = ( id )=>{
+        // let text = ""
+        // for(let found of this.state.todos){
+        //     if(found._id === id){
+        //         text = found.text;
+        //     }
+        // }
+        // axios.post(`http://localhost:5000/todo/${id}`, {
+        //     text: text
+        // }).then(res => {
+        //     this.setState({todos: res.data});
+        // });
+        let text = "";
+        for(let found of this.props.todos){
+            if(found._id === id){
+                text = found.text;
+            }
+        }
+        this.props.saveData(id, text);
+    }
+
     render(){
         // return (
         //     <div className="App">
@@ -123,7 +155,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => bindActionCreators({
     fetchData,
     addData,
-    deleteData
+    deleteData,
+    editData,
+    changeData,
+    saveData,
+    completeTodo,
 }, dispatch);
 
 export default connect( mapStateToProps, mapDispatchToProps)(App);

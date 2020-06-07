@@ -22,3 +22,33 @@ export function deleteData (id) {
         dispatch({ type: "DELETE_DATA", payload: res.data });
     };
 }
+
+export function editData (id) {
+    return async dispatch => {
+        const res = await axios.put(`http://localhost:5000/todo/${id}`);
+        dispatch({ type: "EDIT_DATA", payload: res.data });
+    };
+}
+
+export function changeData (newTodos) {
+    return dispatch => {
+        dispatch({ type: "CHANGE_DATA", payload: newTodos});
+    };
+}
+
+export function saveData ( id, text ) {
+    return async dispatch => {
+        const res = await axios.post(`http://localhost:5000/todo/${id}`, {
+            text: text
+        });
+        dispatch({ type: "SAVE_DATA", payload: res.data});
+    };
+}
+
+export function completeTodo ( id ) {
+    return async dispatch => {
+        const res = await axios.put(`http://localhost:5000/todo/complete/${id}`);
+        dispatch({ type: "COMPLETE_TODO", payload: res.data});
+    };
+}
+
