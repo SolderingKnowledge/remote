@@ -27,8 +27,47 @@ router.delete("/:id", async (req, res, next)=>{
     try {
         const todo = await Todo.findById(req.params.id);
         await todo.remove();
-        console.log("aikol-todo",todo);
-        res.json(todo);
+        const todos = await Todo.find();
+        console.log("aiko-res", todos);
+        res.json(todos);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.put("/:id", async (req, res, next)=>{
+    try {
+        const todo = await Todo.findById(req.params.id);
+        todo.edit = "true";
+        await todo.save();
+        const todos = await Todo.find();
+        res.json(todos);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.post("/:id", async (req, res, next)=>{
+    try {
+        const todo = await Todo.findById(req.params.id);
+        todo.edit = "false";
+        todo.text = req.body.text;
+        await todo.save();
+
+        const todos = await Todo.find();
+        res.json(todos);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.put("/complete/:id", async (req, res, next)=>{
+    try {
+        const todo = await Todo.findById(req.params.id);
+        todo.isCompleted = !todo.isCompleted;
+        await todo.save();
+        const todos = await Todo.find();
+        res.json(todos);
     } catch (error) {
         console.error(error);
     }

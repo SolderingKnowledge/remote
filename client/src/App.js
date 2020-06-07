@@ -3,70 +3,84 @@ import './App.css';
 import Todo from "./components/Todo";
 import Form from "./components/TodoForm";
 import axios from "axios";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+//Custom imports
+import { fetchData, addData, deleteData } from "./actions/index";
 
 class App extends Component {
-    state = {
-        todos: [],
-    };
 
     UNSAFE_componentWillMount(){
-            axios.get("http://localhost:5000/todo").then((res) => {
-                console.log("response", res.data)
-                this.setState({todos: res.data})
-            });
+            this.props.fetchData();
+            // axios.get("http://localhost:5000/todo").then((res) => {
+            //     this.setState({todos: res.data})
+            // });
             // fetch("http://localhost:5000/todo").then(res => res.json()).
             //     then( res => {
             //         this.setState({todos: res})
             //     });
     }
     add = (text)=> {
-        axios.post("http://localhost:5000/todo/add", {
-            text: text,
-        }).then((res) => {
-            const newTodos = [...this.state.todos, res.data];
-            this.setState({todos: newTodos});
-        });
+        // axios.post("http://localhost:5000/todo/add", {
+        //     text: text,
+        // }).then((res) => {
+        //     const newTodos = [...this.state.todos, res.data];
+        //     this.setState({todos: newTodos});
+        // });
+
+        this.props.addData(text);
     }
 
-    complete = index => {
-        const newTodos = [...this.state.todos];
-        newTodos[index].isCompleted = !newTodos[index].isCompleted;
-        this.setState({todos: newTodos});
-    }
+    // complete = id => {
+    //     axios.put(`http://localhost:5000/todo/complete/${id}`).then((res) => {
+    //         this.setState({todos: res.data});
+    //     })
+    // }
+    
     delette = id => {
-        axios.delete(`http://localhost:5000/todo/${id}`)
-            .then((res) => {
-            const newTodos= this.state.todos.filter(todo => todo._id !== res.data._id );
-            this.setState({todos: newTodos});
-        });
-
-        // const newTodos = [...this.state.todos];
-        // newTodos.splice(index, 1);
-        // this.setState({todos: newTodos});
+        // axios.delete(`http://localhost:5000/todo/${id}`)
+        //     .then((res) => {
+        //     const newTodos= this.state.todos.filter(todo => todo._id !== res.data._id );
+        //     this.setState({todos: newTodos});
+        // });
+        this.props.deleteData(id);
     }
 
-    edit = (index) => {
-        const newTodos = [...this.state.todos];
-        newTodos[index].edit = true;
-        this.setState({todos: newTodos});
-    }
-    change = (value, index) => {
-        const newTodos = [...this.state.todos];
-        newTodos[index].text = value;
-        this.setState({todos: newTodos});
-    }
+    // edit = (id) => {
+    //     axios.put(`http://localhost:5000/todo/${id}`).then((res) => {
+    //         this.setState({todos: res.data});
+    //     })
+    // }
+    // change = (value, id) => {
+    //     const newTodos = this.state.todos.map( todo => {
+    //         if(todo._id === id){
+    //             todo.text = value;
+    //         }
+    //         return todo;
+    //     })
+    //     this.setState({todos: newTodos});
+    // }
 
-    save = (index)=>{
-        const newTodos = [...this.state.todos];
-        newTodos[index].edit = !newTodos[index].edit;
-        // if(newTodos[index].isCompleted) newTodos[index].isCompleted=false // optional after edit
-        this.setState({todos: newTodos});
-    }
+    // save = ( id )=>{
+    //     let text = ""
+    //     for(let found of this.state.todos){
+    //         if(found._id === id){
+    //             text = found.text;
+    //         }
+    //     }
+    //     axios.post(`http://localhost:5000/todo/${id}`, {
+    //         text: text
+    //     }).then(res => {
+    //         this.setState({todos: res.data});
+    //     });
+    // }
     render(){
+        console.log("aikol-todos", this.props.todos)
         return (
             <div className="App">
                 {
-                    this.state.todos.length ? this.state.todos.map((todo, idx) => {
+                    this.props.todos.length && this.props.todos[0]._id ? this.props.todos.map((todo, idx) => {
                         return (
                             <Todo key={idx} id={todo._id}
                                 todo={todo} complete={this.complete}
@@ -82,4 +96,13 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {todos: state.todos}
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+    fetchData,
+    addData,
+    deleteData
+}, dispatch);
+
+export default connect( mapStateToProps, mapDispatchToProps)(App);
