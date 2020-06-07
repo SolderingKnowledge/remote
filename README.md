@@ -1,4 +1,4 @@
-# Todo list app:
+# Todo list app: Fully full Stack
 
 1 NodeJS Express + Mongoose (backend);
 
