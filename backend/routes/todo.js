@@ -14,7 +14,8 @@ router.post("/add", async (req, res, next)=>{
         const newTodo = new Todo({
             text: req.body.text,
             isCompleted: false,
-            edit: false
+            edit: false,
+            priority: 0,
         });
         const todo = await newTodo.save();//store is DB and brings this one back
         res.json(todo);
@@ -65,6 +66,32 @@ router.put("/complete/:id", async (req, res, next)=>{
     try {
         const todo = await Todo.findById(req.params.id);
         todo.isCompleted = !todo.isCompleted;
+        await todo.save();
+        const todos = await Todo.find();
+        res.json(todos);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.put("/increment/:id", async (req, res, next)=>{
+    try {
+        const todo = await Todo.findById(req.params.id);
+        todo.priority += 1;
+        await todo.save();
+        const todos = await Todo.find();
+        res.json(todos);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.put("/decrement/:id", async (req, res, next)=>{
+    try {
+        const todo = await Todo.findById(req.params.id);
+        if(todo.priority > 0){
+            todo.priority -= 1;
+        }
         await todo.save();
         const todos = await Todo.find();
         res.json(todos);

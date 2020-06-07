@@ -1,5 +1,5 @@
 import React from 'react';
-function Todo({todo, id, complete, delette, edit, change, save}) {
+function Todo({todo, id, complete, delette, edit, change, save, priority, increment, decrement}) {
     return (
         <h1 style={{textDecoration: todo.isCompleted?
             "line-through": ""
@@ -30,6 +30,7 @@ function Todo({todo, id, complete, delette, edit, change, save}) {
                     <button onClick={()=> delette(id)}>
                         x
                     </button>
+                    <div>Priority: <button onClick={()=> increment(id)}>+</button><span>{priority}</span><button onClick={()=> decrement(id)}>-</button></div>
                 </span>
             }   
         </h1>

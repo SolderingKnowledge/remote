@@ -15,6 +15,8 @@ import {
     changeData,
     saveData,
     completeTodo,
+    incrementPriority,
+    decrementPriority,
 } from "./actions/index";
 
 class App extends Component {
@@ -113,6 +115,16 @@ class App extends Component {
         this.props.saveData(id, text);
     }
 
+    increment = (id) => {
+        console.log("increment: ", id);
+        this.props.incrementPriority(id);
+    }
+
+    decrement = (id) => {
+        console.log("decrement: ", id);
+        this.props.decrementPriority(id);
+    }
+
     render(){
         // return (
         //     <div className="App">
@@ -139,6 +151,9 @@ class App extends Component {
                                 todo={todo} complete={this.complete}
                                 delette={this.delette} edit={this.edit}
                                 change={this.change} save={this.save}
+                                priority={todo.priority}
+                                increment={this.increment}
+                                decrement={this.decrement}
                             /> 
                         )
                     }): ""
@@ -160,6 +175,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     changeData,
     saveData,
     completeTodo,
+    incrementPriority,
+    decrementPriority,
+
 }, dispatch);
 
 export default connect( mapStateToProps, mapDispatchToProps)(App);

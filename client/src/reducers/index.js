@@ -34,6 +34,14 @@ const reducer = (state = initialState, action) => {
             return {
                 todos: [...action.payload],
             }
+        case "INCREMENT_SAGA":
+            return {
+                todos: [...action.payload],
+            }
+        case "DECREMENT_SAGA":
+            return {
+                todos: [...action.payload],
+            }
         default:
             return state;
     }

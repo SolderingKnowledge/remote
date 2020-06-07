@@ -52,3 +52,19 @@ export function completeTodo ( id ) {
     };
 }
 
+export function incrementPriority ( id ) {
+    return dispatch => {
+    // return async dispatch => {
+        // const res = await axios.put(`http://localhost:5000/todo/decrement/${id}`);
+        // dispatch({ type: "INCREMENT_PRIORITY", payload: res.data });
+        dispatch({ type: "INCREMENT_PRIORITY", id: id });
+    };
+}
+
+export function decrementPriority ( id ) {
+    return async dispatch => {
+        // const res = await axios.put(`http://localhost:5000/todo/decrement/${id}`);
+        dispatch({ type: "DECREMENT_PRIORITY", id });
+    };
+}
+
