@@ -1,15 +1,19 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const connectDB = require("./config/db");
 
+// Connect to Atlas
+connectDB();
 //custom routes
-const places = require("./routes/places");
-const users = require("./routes/users");
 const todo = require("./routes/todo");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 // MIDDLEWARE 
 // app.use()
+
+//Midlleware for sending data in the body
+app.use(express.json({extended: false}));
 
 // Error handling
 app.use((error, req, res, next) => {
@@ -34,8 +38,6 @@ app.use((req, res, next)=> {
 
 
 // using routes that I imported and filtering routes
-app.use("/users", users);
-
 app.use("/todo", todo);
 
 app.listen(PORT, ()=> console.log(`Server is running on port ${PORT}`));

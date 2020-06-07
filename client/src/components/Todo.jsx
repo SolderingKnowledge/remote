@@ -1,5 +1,5 @@
 import React from 'react';
-function Todo({todo, index, complete, delette, edit, change, save}) {
+function Todo({todo, id, complete, delette, edit, change, save}) {
     return (
         <h1 style={{textDecoration: todo.isCompleted?
             "line-through": ""
@@ -9,11 +9,11 @@ function Todo({todo, index, complete, delette, edit, change, save}) {
                         <input placeholder={todo.text} value={todo.text}
                             onChange={(e)=> {
                              e.preventDefault();
-                             change(e.target.value, index);
+                             change(e.target.value, id);
                             }
                         } 
                         />
-                        <button onClick={() => save(index)}>
+                        <button onClick={() => save(id)}>
                             save
                         </button> 
                     </span>
@@ -21,13 +21,13 @@ function Todo({todo, index, complete, delette, edit, change, save}) {
             }
             {todo.edit? "":
                 <span>
-                    <button onClick={()=> complete(index)}>
+                    <button onClick={()=> complete(id)}>
                         {todo.isCompleted? "completed": "complete"}
                     </button>
-                    <button onClick={()=> edit(index)}>
+                    <button onClick={()=> edit(id)}>
                         edit
                     </button>
-                    <button onClick={()=> delette(index)}>
+                    <button onClick={()=> delette(id)}>
                         x
                     </button>
                 </span>

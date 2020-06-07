@@ -11,6 +11,7 @@ class App extends Component {
 
     UNSAFE_componentWillMount(){
             axios.get("http://localhost:5000/todo").then((res) => {
+                console.log("response", res.data)
                 this.setState({todos: res.data})
             });
             // fetch("http://localhost:5000/todo").then(res => res.json()).
@@ -19,8 +20,12 @@ class App extends Component {
             //     });
     }
     add = (text)=> {
-        const newTodos = [...this.state.todos, {text}];
-        this.setState({todos: newTodos});
+        axios.post("http://localhost:5000/todo/add", {
+            text: text,
+        }).then((res) => {
+            const newTodos = [...this.state.todos, res.data];
+            this.setState({todos: newTodos});
+        });
     }
 
     complete = index => {
@@ -28,10 +33,16 @@ class App extends Component {
         newTodos[index].isCompleted = !newTodos[index].isCompleted;
         this.setState({todos: newTodos});
     }
-    delette = index => {
-        const newTodos = [...this.state.todos];
-        newTodos.splice(index, 1);
-        this.setState({todos: newTodos});
+    delette = id => {
+        axios.delete(`http://localhost:5000/todo/${id}`)
+            .then((res) => {
+            const newTodos= this.state.todos.filter(todo => todo._id !== res.data._id );
+            this.setState({todos: newTodos});
+        });
+
+        // const newTodos = [...this.state.todos];
+        // newTodos.splice(index, 1);
+        // this.setState({todos: newTodos});
     }
 
     edit = (index) => {
@@ -57,7 +68,7 @@ class App extends Component {
                 {
                     this.state.todos.length ? this.state.todos.map((todo, idx) => {
                         return (
-                            <Todo key={idx} index={idx}
+                            <Todo key={idx} id={todo._id}
                                 todo={todo} complete={this.complete}
                                 delette={this.delette} edit={this.edit}
                                 change={this.change} save={this.save}

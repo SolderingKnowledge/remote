@@ -1,0 +1,4 @@
+{
+    "mongoSRV": "atlas-string-connection",
+    "jwtToken": "myJWTtoken"
+}
