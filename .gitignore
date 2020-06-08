@@ -1,3 +1,6 @@
 node_modules/
 .DS_Store
-dist
+# dist
+backend/config/default.json
+backend/config/production.json
+# backend/.vscode

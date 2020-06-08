@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
+const path = require("path");
 
 // Connect to Atlas
 connectDB();
@@ -39,5 +40,14 @@ app.use((req, res, next)=> {
 
 // using routes that I imported and filtering routes
 app.use("/todo", todo);
+
+// serve static assets in production
+if(process.env.NODE_ENV === "production"){
+    // Set static folder
+    app.use(express.static("client/build"));// serve build folder the result of: npm run build
+    app.get("*", (req, res)=> {// get anything
+        res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));// current directory and go client/build/index.html to serve
+    })
+}
 
 app.listen(PORT, ()=> console.log(`Server is running on port ${PORT}`));
