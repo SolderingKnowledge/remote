@@ -10,7 +10,6 @@ router.get("/", async (req, res, next)=>{
 
 router.post("/add", async (req, res, next)=>{
     try {
-        console.log("aikol-req", req.body)
         const newTodo = new Todo({
             text: req.body.text,
             isCompleted: false,
@@ -29,7 +28,6 @@ router.delete("/:id", async (req, res, next)=>{
         const todo = await Todo.findById(req.params.id);
         await todo.remove();
         const todos = await Todo.find();
-        console.log("aiko-res", todos);
         res.json(todos);
     } catch (error) {
         console.error(error);

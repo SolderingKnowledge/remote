@@ -1,0 +1,14 @@
+.todo-box{
+    border: 1px solid black;
+    margin: 10px;
+    text-align: center;
+    padding: 5px;
+}
+
+.todo-form{
+    text-align: center;
+    padding: 20px;
+}
+.todo-form input{
+    padding: 10px;
+}

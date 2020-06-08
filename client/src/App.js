@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import Todo from "./components/Todo";
 import Form from "./components/TodoForm";
-import axios from "axios";
+// import axios from "axios";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -116,12 +116,10 @@ class App extends Component {
     }
 
     increment = (id) => {
-        console.log("increment: ", id);
         this.props.incrementPriority(id);
     }
 
     decrement = (id) => {
-        console.log("decrement: ", id);
         this.props.decrementPriority(id);
     }
 

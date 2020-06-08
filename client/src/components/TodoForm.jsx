@@ -11,7 +11,7 @@ function Form({add}) {
     }
 
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className="todo-form">
             <input type="text" placeholder="add todo.." value={value} onChange={ e => {
                 setValue(e.target.value);
             }} />
