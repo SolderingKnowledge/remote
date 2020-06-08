@@ -1,4 +1,5 @@
 {
     "mongoSRV": "mongodb+srv://aikol:4321qwer@mycluster-1a2za.mongodb.net/test?retryWrites=true&w=majority",
+    
     "jwtToken": "myJWTtoken"
 }
